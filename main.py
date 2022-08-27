@@ -25,3 +25,5 @@ if __name__ == "__main__":
     # Print object
     # aMap.print()
     print("Done")
+
+    print("Test")
