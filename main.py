@@ -1,3 +1,4 @@
+from operator import add
 from turtle import width
 from tqdm import tqdm
 from genericpath import exists
@@ -5,11 +6,9 @@ import sys,os
 from map import Map
 from resource import Resource, ResourceType
 
-def getResourceLocations(lines):
-    locations = []
+def addResourceItems(lines, items, type):
     for line in lines:
-        locations.append(map(int,line.split()))
-    return locations
+        items.append(map(int,line.split()),type)
 
 if __name__ == "__main__":
     
@@ -30,6 +29,7 @@ if __name__ == "__main__":
     print("Extracting info...")
     step_allowance = lines[0][15:]
     n = 0
+    resource_items = []
     for i in range(2,len(lines)):
         if lines[i] == "\n":
             continue
@@ -38,11 +38,12 @@ if __name__ == "__main__":
             resource_type, quantity = lines[i].split(',')
             quantity = int(quantity)
             if resource_type == "Coal":
-                coals = Resource(ResourceType.COAL, quantity, getResourceLocations(lines[i+1:i+quantity]))
+                coals = Resource(ResourceType.COAL, quantity)
             elif resource_type == "Fish":
-                fish=Resource(ResourceType.FISH,quantity,getResourceLocations(lines[i+1:i+quantity]))
+                fish=Resource(ResourceType.FISH,quantity)
             elif resource_type == "Scrap Metal":
-                scrap_metal = Resource(ResourceType.SCRAP_METAL,quantity,getResourceLocations(lines[i+1:i+quantity]))
+                scrap_metal = Resource(ResourceType.SCRAP_METAL,quantity)
+            addResourceItems(lines[i+1:i+quantity, resource_items],resource_type)
         elif lines[i][0] == "Q" and lines[i+1][0] == "Q":
             quota = lines[i][6:].split(',')
             quota_multiplier = float(lines[i+1][17:])

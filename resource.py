@@ -3,27 +3,21 @@ from turtle import distance
 import math
 
 class ResourceType(Enum):
-    COAL = "C"
-    FISH = "F"
-    SCRAP_METAL = "M"
+    COAL = 200
+    FISH = 400
+    SCRAP_METAL = 1000
 
 class Resource:
-    def __init__(self, type, quantity, locations=[]) -> None:
+    def __init__(self, type, quantity) -> None:
         self.type = type
-        self.items = self.generateItems(locations)
         self.quantity = quantity
         self.closest = self.getClosest(self.items)
 
-    def generateItems(self,locations):
-        for location in locations:
-            self.items.append(Item(location[0], location[1]))
-        return self.items
-
-    def getDistance(self, x, y, a, b):
-        distance = math.sqrt((x - a)**2 + (y - b)**2)
+    def getDistance(self, position, item):
+        distance = math.sqrt((item.x - position[0])**2 + (item.y - position[1])**2)
         return distance
 
-    def getClosest(self,items, position):
+    def getClosest(self,position,items):
         position_x = position[0]
         position_y = position[1]
         distance = self.getDistance(position_x, position_y, items[0][0], items[0][1])
@@ -40,6 +34,7 @@ class Resource:
         return None
 
 class Item:
-    def __init__(self, x, y) -> None:
-        self.x = x
-        self.y = y
+    def __init__(self, position, type) -> None:
+        self.x = position[0]
+        self.y = position[1]
+        self.type = type
