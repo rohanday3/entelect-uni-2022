@@ -1,6 +1,7 @@
 from tqdm import tqdm
 from genericpath import exists
 import sys,os
+from map import Map
 
 if __name__ == "__main__":
     
