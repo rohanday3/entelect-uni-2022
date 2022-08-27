@@ -43,7 +43,7 @@ if __name__ == "__main__":
                 fish=Resource(ResourceType.FISH,quantity)
             elif resource_type == "Scrap Metal":
                 scrap_metal = Resource(ResourceType.SCRAP_METAL,quantity)
-            addResourceItems(lines[i+1:i+quantity, resource_items],resource_type)
+            addResourceItems(lines[i+1:i+quantity], resource_items,resource_type)
         elif lines[i][0] == "Q" and lines[i+1][0] == "Q":
             quota = lines[i][6:].split(',')
             quota_multiplier = float(lines[i+1][17:])
