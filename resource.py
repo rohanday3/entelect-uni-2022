@@ -27,8 +27,8 @@ class Resource:
         return closest
 
     # function that returns an item from location
-    def getItem(self,location):
-        for item in self.items:
+    def getItem(self,items,location):
+        for item in items:
             if item.x == location[0] and item.y == location[1]:
                 return item
         return None
