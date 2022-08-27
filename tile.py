@@ -7,10 +7,11 @@ class TileType(Enum):
     MOUNTAIN = 15
 
 class Tile:
-    def __init__(self,type:TileType,location) -> None:
+    def __init__(self,type:TileType,location, resource = None) -> None:
         self.type = type
         self.difficulty = self.type.value
         self.location = location
+        self.resource = resource
 
     # function that returns an tile from location
     def getTile(tiles,location):
