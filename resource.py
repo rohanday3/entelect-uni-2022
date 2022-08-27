@@ -1,4 +1,6 @@
 from enum import Enum
+from turtle import distance
+import math
 
 class ResourceType(Enum):
     COAL = "C"
@@ -17,10 +19,16 @@ class Resource:
             self.items.append(Item(location[0], location[1]))
         return self.items
 
-    def getClosest(self,items):
-        closest = items[0]
+    def getDistance(self, x, y, a, b):
+        distance = math.sqrt((x - a)**2 + (y - b)**2)
+        return distance
+
+    def getClosest(self,items, position):
+        position_x = position[0]
+        position_y = position[1]
+        distance = self.getDistance(position_x, position_y, items[0][0], items[0][1])
         for item in items:
-            if item.distance < closest.distance:
+            if self.getDistance(position_x, position_y, item[0], item[1]) < distance:
                 closest = item
         return closest
 
