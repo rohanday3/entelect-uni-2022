@@ -36,11 +36,15 @@ class Score:
         self.calculate_resources()
         return self.travel_score + self.resource_score
 
-    def calculate_travel_score(self, party, step_allowance):
+    def calculate_travel_score(self):
         """
         Finds travel score of party w/ step allowance
         """
-        
+        for i in range(len(self.path)):
+            if i<=self.step_allowance-1:
+                self.travel_score += (self.travel_rewards*150/self.path[i].difficulty)/((i/self.step_allowance)+1)
+            else:
+                self.travel_score -= (self.travel_penulties*150/self.path[i].difficulty)*((i-self.step_allowance/self.step_allowance)+1)
 
     def scout_present(self, rewards, penalties):
         self.travel_rewards = rewards*2
