@@ -56,7 +56,7 @@ if __name__ == "__main__":
             
     print("Creating map...")
     print(f"Height: {height} Width: {width}")
-    # aMap = Map(map, height, width)
+    aMap = Map(map, height, width, resource_items)
     print("Printing map...")
     # aMap.print()
     print("Done")
