@@ -2,6 +2,7 @@ from pydoc import resolve
 import math
 from random import randint
 from resource import ResourceType
+from tile import Tile
 
 class Score:
     """
@@ -10,7 +11,7 @@ class Score:
 
     """
 
-    def __init__(self, resources, quota,quota_m, step_allowance, path):
+    def __init__(self, resources, quota,quota_m, step_allowance, path, map):
         self.travel_score = 0
         self.resources = resources
         self.quota = quota
@@ -22,9 +23,11 @@ class Score:
         self.path = path
         self.party = {}
         self.resource_multiplier = 1
+        self.diff_map = map.diff_map
+        self.tiles = map.tiles
         # self.randomParty()
-        self.scout_present(self, 1, 0)
-        self.gatherer_present(self)
+        self.scout_present(1, 0)
+        self.gatherer_present()
 
     def calculate_score(self):
         """
@@ -32,7 +35,7 @@ class Score:
         """
         if self.quotaMet:
             self.resource_multiplier*=2
-        self.calculate_travel_score(self.party, self.step_allowance)
+        self.calculate_travel_score()
         self.calculate_resources()
         return self.travel_score + self.resource_score
 
@@ -40,11 +43,11 @@ class Score:
         """
         Finds travel score of party w/ step allowance
         """
-        for i in range(len(self.path)):
+        for i in range(1,len(self.path)):
             if i<=self.step_allowance-1:
-                self.travel_score += (self.travel_rewards*150/self.path[i].difficulty)/((i/self.step_allowance)+1)
+                self.travel_score += (self.travel_rewards*150/self.diff_map[self.path[i][0]][self.path[i][1]])/((i/self.step_allowance)+1)
             else:
-                self.travel_score -= (self.travel_penulties*150/self.path[i].difficulty)*((i-self.step_allowance/self.step_allowance)+1)
+                self.travel_score -= (self.travel_penulties*150/self.diff_map[self.path[i][0]][self.path[i][1]])*((i-self.step_allowance/self.step_allowance)+1)
 
     def scout_present(self, rewards, penalties):
         self.travel_rewards = rewards*2
@@ -77,10 +80,12 @@ class Score:
     def calculate_resources(self):
         """
         Finds resource score of party w/ resources
-        TODO: REVIEW USE WITH NODE CLASS
         """
-        for tile in self.path:
-            if tile.resource != None:
+        for i in range(1,len(self.path)):
+            # print([tile for tile in self.tiles])
+            # print(self.tiles)
+            tile = Tile.getTile(self.tiles,[self.path[i][0],self.path[i][1]])
+            if tile.item != None:
                 self.resource_score += tile.item.type.value*self.resource_multiplier
 
     def quotaMet(self):
