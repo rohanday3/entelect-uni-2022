@@ -20,11 +20,9 @@ if __name__ == "__main__":
     print("Creating object...")
     height, width = lines[0][9:].split(',')
     print("Height: " + height + " Width: " + width)
-    # Create object
-    # aMap = Map(lines[2], height, width)
+    aMap = Map(lines[2], height, width)
     print("Printing object...")
-    # Print object
-    # aMap.print()
+    aMap.print()
     print("Done")
 
     print("Test")

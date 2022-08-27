@@ -1,16 +1,16 @@
 from enum import Enum
 
-class EnumType(Enum):
+class TileType(Enum):
     Snow = "S"
     Ice = "I"
     Thick_Snow = "T"
     Mountain = "M"
 
-class ChildClass:
+class Tile:
     def __init__(self,elevation=0) -> None:
         self.elevation = int(elevation)
         self.name = self.calculateType()
-        self.type = EnumType[self.name]
+        self.type = TileType[self.name]
 
     # 0-100 Snow
     # 101-150 Ice
