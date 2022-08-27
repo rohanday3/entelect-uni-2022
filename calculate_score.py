@@ -19,6 +19,7 @@ class Score:
         self.resource_score = 0
         self.path = path
         self.party = {}
+        self.resource_multiplier = 1
 
     def calculate_travel_score(self, party, step_allowance):
         """
@@ -36,7 +37,7 @@ class Score:
         self.party["Healer"] = True
 
     def gatherer_present(self, resources):
-        self.resources = resources*2
+        self.resource_multiplier = 2
         self.party["Gatherer"] = True
 
     # calculate resource score for current path
@@ -45,14 +46,11 @@ class Score:
         Finds resource score of party w/ resources
         TODO: REVIEW USE WITH NODE CLASS
         """
+
+        if gatherer_present:
+            gatherer_present()
+
         for tile in self.path:
             if tile.resource != None:
                 if tile.resource.type == resources:
-                    self.resource_score += tile.resource.quantity
-
-        if gatherer_present:
-            gatherer_present(resources)
-
-        resource_score = 0
-        for i, resource in enumerate(resources):
-            resource_score += resource.type.value
+                    self.resource_score += tile.item.type.value*self.resource_multiplier
