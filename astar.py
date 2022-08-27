@@ -1,9 +1,10 @@
 import math
 from queue import PriorityQueue
+from tqdm import tqdm
 
 class aStar():
 
-    def __init__(self, f, g, h):
+    def __init__(self):
         """
             F is the total cost of the node.
             G is the distance between the current node and the start node.
@@ -46,7 +47,7 @@ class aStar():
 
         neighbours = [up, down, left, right]
         n = []
-        for i in range(len(neighbours)-1, 0, -1):
+        for i in tqdm(range(len(neighbours)-1, 0, -1)):
             if neighbours[i].position != None:
                 n.append(neighbours[i])
 
@@ -64,34 +65,40 @@ class aStar():
         end_node.g = end_node.h = end_node.f = 0
 
         # while openlist not empty
-        while not open_list.empty():
+
+        while tqdm(open_list.empty()):
+            print("1")
             # Get the current node
             current_node = open_list.get()
-
+            print("2")
             # Pop current off open list (happens already with get() above), add to closed list
             closed_list.put(current_node)
-
+            print("3")
             # found goal
             if current_node == end_node:
                 path = []
                 current = current_node
+                print("4")
                 while current is not None:
+                    print("5")
                     path.append(current.position)
                     current = current.parent
+                print("6")
                 return path[::-1] # Return reversed path
 
             # find neighbours
             neighbours = self.get_neighbours(current)
 
-            for neighbour in neighbours:
-                if self.is_in_queue(neighbour, open_list):
+            for i in tqdm(range(len(neighbours))):
+                print("7")
+                if self.is_in_queue(neighbours[i], open_list):
                     continue
 
-                neighbour.g = self.get_g(start, neighbour)
-                neighbour.h = self.get_h(start, neighbour)
-                neighbour.f = self.get_f()
+                neighbours[i].g = self.get_g(start, neighbours[i])
+                neighbours[i].h = self.get_h(start, neighbours[i])
+                neighbours[i].f = self.get_f()
 
-                open_list.put(neighbour)
+                open_list.put(neighbours[i])
 
     
 class Node():
