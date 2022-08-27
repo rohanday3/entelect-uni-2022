@@ -9,7 +9,7 @@ class Score:
 
     """
 
-    def __init__(self, resources, quota, step_allowance):
+    def __init__(self, resources, quota, step_allowance, path):
         self.travel_score = 0
         self.resources = resources
         self.quota = quota
@@ -17,9 +17,10 @@ class Score:
         self.travel_penulties = 0
         self.step_allowance = step_allowance
         self.resource_score = 0
+        self.path = path
         self.party = {}
 
-    def calculate_travel_score(self, path, party, step_allowance):
+    def calculate_travel_score(self, party, step_allowance):
         """
         Finds travel score of party w/ step allowance
         """
@@ -40,6 +41,15 @@ class Score:
 
     # calculate resource score for current path
     def calculate_resources(self, resources, gatherer_present = False):
+        """
+        Finds resource score of party w/ resources
+        TODO: REVIEW USE WITH NODE CLASS
+        """
+        for tile in self.path:
+            if tile.resource != None:
+                if tile.resource.type == resources:
+                    self.resource_score += tile.resource.quantity
+
         if gatherer_present:
             gatherer_present(resources)
 
