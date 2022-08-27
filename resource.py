@@ -32,6 +32,13 @@ class Resource:
                 closest = item
         return closest
 
+    # function that returns an item from location
+    def getItem(self,location):
+        for item in self.items:
+            if item.x == location[0] and item.y == location[1]:
+                return item
+        return None
+
 class Item:
     def __init__(self, x, y) -> None:
         self.x = x

@@ -1,29 +1,28 @@
 from enum import Enum
 
 class TileType(Enum):
-    Snow = "S"
-    Ice = "I"
-    Thick_Snow = "T"
-    Mountain = "M"
+    SNOW = 1
+    ICE = 5
+    THICK_SNOW = 10
+    MOUNTAIN = 15
 
 class Tile:
-    def __init__(self,elevation=0) -> None:
-        self.elevation = int(elevation)
-        self.name = self.calculateType()
-        self.type = TileType[self.name]
+    def __init__(self,type:TileType,location) -> None:
+        self.type = type
+        self.difficulty = self.type.value
+        self.location = location
 
-    # 0-100 Snow
-    # 101-150 Ice
-    # 151-175 Thick Snow
-    # 176-255 Mountain
-    def calculateType(self):
-        if self.elevation < 101:
-            return "Snow"
-        elif self.elevation < 151:
-            return "Ice"
-        elif self.elevation < 176:
-            return "Thick_Snow"
-        else:
-            return "Mountain"
+    # function that returns an tile from location
+    def getTile(tiles,location):
+        for tile in tiles:
+            if tile.location[0] == location[0] and tile.location[1] == location[1]:
+                return tile
+        return None
 
+    def __str__(self):
+        return f"Type: {self.type}, Difficulty: {self.difficulty}, Location: {self.location}"
+
+if __name__ == "__main__":
+    t_test = [Tile(TileType.SNOW,(1,1)),Tile(TileType.ICE,(2,3)),Tile(TileType.THICK_SNOW,(3,4)),Tile(TileType.MOUNTAIN,(4,5))]
+    print(Tile.getTile(t_test,[2,3]))
     
