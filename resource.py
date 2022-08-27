@@ -11,7 +11,6 @@ class Resource:
     def __init__(self, type, quantity) -> None:
         self.type = type
         self.quantity = quantity
-        self.closest = self.getClosest(self.items)
 
     def getDistance(self, position, item):
         distance = math.sqrt((item.x - position[0])**2 + (item.y - position[1])**2)
@@ -27,7 +26,7 @@ class Resource:
         return closest
 
     # function that returns an item from location
-    def getItem(self,items,location):
+    def getItem(items,location):
         for item in items:
             if item.x == location[0] and item.y == location[1]:
                 return item

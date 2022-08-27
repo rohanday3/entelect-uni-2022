@@ -52,7 +52,7 @@ if __name__ == "__main__":
             map = []
             for y in range(height):
                 print([lines[i+y+1][:-1].split(',')])
-                map.append([lines[i+y+1][:-1].split(',')])
+                map.append(lines[i+y+1][:-1].split(','))
             
     print("Creating map...")
     print(f"Height: {height} Width: {width}")

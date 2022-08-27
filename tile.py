@@ -1,10 +1,10 @@
 from enum import Enum
 
 class TileType(Enum):
-    SNOW = 1
-    ICE = 5
-    THICK_SNOW = 10
-    MOUNTAIN = 15
+    S = 1
+    I = 5
+    TS = 10
+    M = 15
 
 class Tile:
     def __init__(self,type:TileType,location, item = None) -> None:
