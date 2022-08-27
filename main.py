@@ -8,7 +8,7 @@ from resource import Resource, ResourceType
 def getResourceLocations(lines):
     locations = []
     for line in lines:
-        locations.append(map(int(),line.split()))
+        locations.append(map(int,line.split()))
     return locations
 
 if __name__ == "__main__":
@@ -44,17 +44,17 @@ if __name__ == "__main__":
             elif resource_type == "Scrap Metal":
                 scrap_metal = Resource(ResourceType.SCRAP_METAL,quantity,getResourceLocations(lines[i+1:i+quantity]))
         elif lines[i][0] == "Q" and lines[i+1][0] == "Q":
-            quota = lines[i][6:].split()
+            quota = lines[i][6:].split(',')
             quota_multiplier = float(lines[i+1][17:])
         elif lines[i][0] == "m":
-            width,height = map(int(),lines[i][9:].split())
-            map = [[' ' for x in range(width)] for y in range(height)]
+            height,width = list(map(int,lines[i][9:].split(',')))
+            map = []
             for y in range(height):
-                for x in range(width):
-                    map[y] = lines[i+y+1].split()
+                print([lines[i+y+1][:-1].split(',')])
+                map.append([lines[i+y+1][:-1].split(',')])
             
     print("Creating map...")
-    print("Height: " + height + " Width: " + width)
+    print(f"Height: {height} Width: {width}")
     # aMap = Map(map, height, width)
     print("Printing map...")
     # aMap.print()
